@@ -4,13 +4,14 @@ files:
   - source: /index.html
     destination: /var/www/html/
 hooks:
-  ApplicationStop:
-    - location: scripts/deregister_from_elb.sh
   BeforeInstall:
     - location: scripts/install_dependencies.sh
+    - location: scripts/update_source.sh
     - location: scripts/stop_server.sh
   AfterInstall:
     - location: scripts/start_server.sh
-  ApplicationStop:
+  ApplicationStart:
     - location: scripts/register_with_elb.sh
+  ApplicationStop:
+    - location: scripts/deregister_from_elb.sh
 
